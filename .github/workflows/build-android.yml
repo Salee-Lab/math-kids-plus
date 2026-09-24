@@ -1,0 +1,49 @@
+name: Build Android APK and AAB
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: android-actions/setup-android@v3
+      - name: Install and create Android project
+        run: |
+          npm install
+          npx cap add android
+          npx cap sync android
+      - name: Build APK (debug) and AAB (release)
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug bundleRelease
+      - name: Sign the AAB and collect files
+        env:
+          KS_B64: ${{ secrets.KEYSTORE_BASE64 }}
+          KS_PASS: ${{ secrets.KEYSTORE_PASSWORD }}
+        run: |
+          mkdir -p out
+          if [ -n "$KS_B64" ]; then
+            echo "$KS_B64" | base64 -d > out/upload.jks
+            PASS="$KS_PASS"
+          else
+            PASS=$(openssl rand -hex 12)
+            keytool -genkeypair -keystore out/upload.jks -alias upload -keyalg RSA -keysize 2048 -validity 10000 -storepass "$PASS" -keypass "$PASS" -dname "CN=Math Kids Plus"
+            echo "alias: upload   password: $PASS" > out/KEEP-THIS-password.txt
+          fi
+          cp android/app/build/outputs/bundle/release/app-release.aab out/math-kids-plus.aab
+          jarsigner -sigalg SHA256withRSA -digestalg SHA-256 -keystore out/upload.jks -storepass "$PASS" -keypass "$PASS" out/math-kids-plus.aab upload
+          cp android/app/build/outputs/apk/debug/app-debug.apk out/math-kids-plus.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: math-kids-plus-android
+          path: out/
