@@ -8,6 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Find project folder
+        run: |
+          FILE=$(find . -name package.json -not -path '*/node_modules/*' | head -n 1)
+          if [ -z "$FILE" ]; then echo "package.json was not uploaded to the repository"; exit 1; fi
+          echo "APP_DIR=$(dirname "$FILE")" >> "$GITHUB_ENV"
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -20,16 +25,18 @@ jobs:
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
           $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-36" "build-tools;36.0.0" || true
       - name: Install and create Android project
+        working-directory: ${{ env.APP_DIR }}
         run: |
           npm install
           npx cap add android
           npx cap sync android
       - name: Build APK (debug) and AAB (release)
-        working-directory: android
+        working-directory: ${{ env.APP_DIR }}/android
         run: |
           chmod +x gradlew
           ./gradlew assembleDebug bundleRelease
       - name: Sign the AAB and collect files
+        working-directory: ${{ env.APP_DIR }}
         env:
           KS_B64: ${{ secrets.KEYSTORE_BASE64 }}
           KS_PASS: ${{ secrets.KEYSTORE_PASSWORD }}
@@ -49,4 +56,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: math-kids-plus-android
-          path: out/
+          path: ${{ env.APP_DIR }}/out/
