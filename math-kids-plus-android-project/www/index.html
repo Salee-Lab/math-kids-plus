@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Math Kids Plus</title>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#bfe8ff;--s1:#4fc3ff;--s2:#ffe0f0;--sun:#ffd54a;--cl:#fff;--h1:#8fe39a;--h2:#5fca85;--h3:#3bb072;--so:0;--rb:.6;--fg:#1f2a5a;--card:#fff;--line:#c4e0f2;--a:#6c5ce7;--y:#ffc93c;--ok:#22c58b;--no:#f0567a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141b3a;--fg:#eef1ff;--card:#212a55;--line:#34407a;--s1:#0f1538;--s2:#2b2f6e;--sun:#f4efc8;--cl:#3d4586;--h1:#2d6e6c;--h2:#22595d;--h3:#184750;--so:1;--rb:.2}}
+:root[data-theme=dark]{--bg:#141b3a;--fg:#eef1ff;--card:#212a55;--line:#34407a;--s1:#0f1538;--s2:#2b2f6e;--sun:#f4efc8;--cl:#3d4586;--h1:#2d6e6c;--h2:#22595d;--h3:#184750;--so:1;--rb:.2}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:ui-rounded,'Arial Rounded MT Bold',system-ui,'Noto Sans Sinhala','Iskoola Pota',sans-serif;min-height:100vh}
+#app{max-width:520px;margin:0 auto;padding:14px}
+h1{text-align:center;margin:8px 0 2px;font-size:26px}
+h2{margin:0}p{margin:0}
+.sub{text-align:center;font-weight:700;margin-bottom:10px}
+.seg{display:flex;gap:6px;margin:10px 0}
+.seg button{flex:1;padding:10px;border:2px solid var(--line);background:var(--card);color:var(--fg);border-radius:14px;font-size:15px;font-weight:700}
+.seg .on{background:var(--a);border-color:var(--a);color:#fff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mode{position:relative;background:var(--card);border:2px solid var(--line);border-radius:18px;padding:14px 8px;color:var(--fg);display:flex;flex-direction:column;align-items:center;gap:2px;font-size:15px}
+.mode span{font-size:34px}.mode small{opacity:.6}
+.mode em{position:absolute;top:6px;right:8px;background:var(--y);color:#1f2a5a;font-size:10px;font-style:normal;padding:2px 6px;border-radius:9px;font-weight:800}
+.link{display:block;width:100%;margin-top:12px;padding:13px;border:0;border-radius:14px;background:var(--a);color:#fff;font-size:16px;font-weight:700}
+.top{display:flex;align-items:center;gap:10px;font-weight:800}
+.ic{border:0;background:var(--card);color:var(--fg);border-radius:12px;padding:8px 12px;font-size:16px}
+.bar{flex:1;height:12px;background:var(--line);border-radius:8px;overflow:hidden}
+.bar b{display:block;height:100%;background:var(--ok);transition:width .3s}
+.card{background:var(--card);border-radius:22px;padding:18px;margin:14px 0;text-align:center;min-height:180px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px}
+.big{font-size:32px;line-height:1.3;word-break:break-all}
+.eq{font-size:40px;font-weight:800;word-spacing:.2em}
+.blank{display:inline-block;margin:0 .3em;padding:0 .2em;min-width:1.2em;text-align:center;border-bottom:4px dashed var(--y);color:var(--a)}
+.two{display:flex;gap:12px;width:100%;justify-content:space-around}
+.two .big{flex:1;border:2px dashed var(--line);border-radius:14px;padding:8px;font-size:26px}
+.x{opacity:.25;filter:grayscale(1)}
+.tf{display:grid;grid-template-columns:repeat(5,44px);gap:6px}
+.tf i{width:44px;height:44px;border:2px solid var(--line);border-radius:8px}
+.tf .r{background:var(--no)}.tf .u{background:var(--a)}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px}
+.opt{padding:18px 6px;font-size:28px;font-weight:800;border:3px solid var(--line);border-radius:18px;background:var(--card);color:var(--fg)}
+.opt.ok{background:var(--ok);border-color:var(--ok);color:#fff;animation:pop .4s}
+.opt.no{background:var(--no);border-color:var(--no);color:#fff}
+@keyframes pop{50%{transform:scale(1.12)}}
+.fb{text-align:center;font-size:20px;font-weight:800;margin-top:14px;min-height:28px}
+.st{font-size:52px}
+table{width:100%;border-collapse:collapse}
+td,th{padding:6px;border-bottom:1px solid var(--line);text-align:center;font-size:14px}
+.stk{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;font-size:32px;text-align:center;margin:10px 0}
+#sp{position:fixed;inset:0;z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:linear-gradient(160deg,#6c5ce7,#3aa0ff);color:#fff;padding:env(safe-area-inset-top,0px) 20px env(safe-area-inset-bottom,0px);transition:opacity .5s;overflow:hidden;text-align:center}
+#sp .sl{font-size:96px;animation:bob 1s ease-in-out infinite;filter:drop-shadow(0 8px 0 rgba(0,0,0,.15))}
+#sp h1{margin:0;font-size:34px}
+#sp .lb{width:min(240px,70vw);height:14px;border-radius:9px;background:rgba(255,255,255,.3);overflow:hidden}
+#sp .lb b{display:block;height:100%;width:0;background:var(--y);border-radius:9px;animation:ld 1.7s ease-out forwards}
+#sp .fl{position:absolute;font-size:34px;font-weight:800;opacity:.35;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-14px)}}
+@keyframes ld{to{width:100%}}
+@media(prefers-reduced-motion:reduce){#sp *{animation-duration:.01s!important}}
+#bg{position:fixed;inset:0;z-index:-1}#bg svg{width:100%;height:100%;display:block}
+.k1{stop-color:var(--s1)}.k2{stop-color:var(--s2)}.sun{fill:var(--sun)}.cl{fill:var(--cl)}.h1{fill:var(--h1)}.h2{fill:var(--h2)}.h3{fill:var(--h3)}.stars{fill:#fff;opacity:var(--so)}.rb{fill:none;stroke-width:9;opacity:var(--rb)}
+table,.stk{background:var(--card);border-radius:16px}.stk{padding:8px}
+.fb:not(:empty){background:var(--card);border-radius:14px;padding:8px 12px}
+#bg .e{position:absolute;font-size:clamp(28px,6vw,52px);animation:fl 5s ease-in-out infinite}
+#bg .an{top:auto;bottom:2%;font-size:clamp(40px,9vw,72px);animation:none}
+@keyframes fl{50%{transform:translateY(-16px) rotate(6deg)}}
+@media(prefers-reduced-motion:reduce){#bg .e{animation:none}}
+.hb{display:flex;align-items:center;justify-content:center;gap:14px;background:var(--card);border-radius:22px;padding:12px;margin:12px 0}
+.hb span{font-size:96px;line-height:1;animation:beat 1.2s ease-in-out infinite}.hb b{display:block;font-size:56px;line-height:1}.hb small{opacity:.7}
+@keyframes beat{50%{transform:scale(1.12)}}
+@media(prefers-reduced-motion:reduce){.hb span{animation:none}}
+</style></head><body><div id=bg><svg viewBox="0 0 400 800" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id=g x1=0 y1=0 x2=0 y2=1><stop class=k1 offset=0 /><stop class=k2 offset=.75 /></linearGradient><g id=c class=cl><ellipse cx=70 cy=40 rx=40 ry=15 /><ellipse cx=95 cy=28 rx=28 ry=18 /><ellipse cx=48 cy=32 rx=24 ry=14 /></g></defs><rect width=400 height=800 fill="url(#g)" />
+<g class=stars><circle cx=40 cy=60 r=2 /><circle cx=120 cy=110 r=1.5 /><circle cx=200 cy=40 r=2 /><circle cx=260 cy=140 r=1.5 /><circle cx=350 cy=60 r=2 /><circle cx=60 cy=230 r=1.5 /><circle cx=330 cy=250 r=2 /></g>
+<circle class=sun cx=320 cy=100 r=64 opacity=.25 /><circle class=sun cx=320 cy=100 r=42 />
+<g class=rb><path d="M-40 560A230 230 0 0 1 420 560" stroke="#ff6b6b" /><path d="M-31 560A221 221 0 0 1 411 560" stroke="#ffb347" /><path d="M-22 560A212 212 0 0 1 402 560" stroke="#ffe066" /><path d="M-13 560A203 203 0 0 1 393 560" stroke="#6fdc8c" /><path d="M-4 560A194 194 0 0 1 384 560" stroke="#5aa9ff" /></g>
+<use href="#c" x=-20 y=120 /><use href="#c" x=210 y=210 /><use href="#c" x=40 y=340 />
+<path class=h1 d="M0 640Q100 560 220 620T400 600V800H0Z" /><path class=h2 d="M0 700Q120 630 240 690T400 670V800H0Z" />
+<rect x=300 y=650 width=7 height=26 fill="#8a5a3c" /><circle class=h3 cx=303 cy=645 r=20 />
+<path class=h3 d="M0 760Q140 710 280 750T400 740V800H0Z" />
+<circle cx=50 cy=752 r=4 fill="#ff8fb1" /><circle cx=90 cy=762 r=4 fill="#ffe066" /><circle cx=150 cy=748 r=4 fill="#fff" /><circle cx=220 cy=758 r=4 fill="#ff8fb1" /><circle cx=330 cy=764 r=4 fill="#ffe066" /></svg><span class=e style="left:6%;top:22%;animation-delay:0s">🎈</span><span class=e style="left:88%;top:36%;animation-delay:1s">🎈</span><span class=e style="left:18%;top:46%;animation-delay:0.5s">🦋</span><span class=e style="left:76%;top:58%;animation-delay:1.5s">🦋</span><span class=e style="left:62%;top:28%;animation-delay:1.8s">⭐</span><span class=e style="left:90%;top:70%;animation-delay:1.2s">🌸</span><span class=e style="left:8%;top:66%;animation-delay:0.3s">🌸</span><span class="e an" style="left:4%">🦁</span><span class="e an" style="left:28%">🐘</span><span class="e an" style="left:78%">🦄</span></div><div id="sp"><span class=fl style="left:8%;top:12%">1</span><span class=fl style="left:80%;top:18%;animation-delay:.4s">➕</span><span class=fl style="left:15%;top:72%;animation-delay:.8s">2</span><span class=fl style="left:75%;top:76%;animation-delay:1.2s">✖️</span><span class=fl style="left:45%;top:8%;animation-delay:.6s">3</span><span class=fl style="left:50%;top:88%;animation-delay:1s">➖</span><div class=sl>🦁</div><h1>Math Kids Plus</h1><div class=lb><b></b></div><p>Loading…</p></div><div id="app"></div>
+<script>
+const $=s=>document.querySelector(s),R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,pick=a=>a[R(0,a.length-1)],shuffle=a=>a.sort(()=>Math.random()-.5);
+const EM=['🍎','🐥','⭐','🚗','🎈','🐟','🍓','🐸','🌸','🍪'],STK=['🦁','🐘','🐼','🦊','🐯','🐵','🐰','🐢','🦄','🐬','🦋','🐙'];
+const MODES=[['count','🔢','Count It','Counting'],['compare','⚖️','Compare','More or fewer'],['add','➕','Add It Up','Adding'],['sub','➖','Take Away','Subtracting'],['symbol','❓','Find the Sign','+ or −'],['mult','✖️','Multiply','Groups of',1],['pattern','🧩','Patterns','Number patterns',1],['frame','🔟','Ten Frame','Fill the boxes',1],['speed','⚡','Speed Round','60 seconds',1]];
+let S={};try{S=JSON.parse(localStorage.getItem('mkp')||'{}')}catch(e){}
+S.stars=S.stars||0;S.snd=S.snd!==false;S.rep=S.rep||{};S.lv=S.lv||1;
+const save=()=>{try{localStorage.setItem('mkp',JSON.stringify(S))}catch(e){}};
+const hearts=()=>Object.values(S.rep).reduce((a,r)=>a+r.c,0);
+let ac;const beep=(f,d=.15)=>{if(!S.snd)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;g.gain.value=.1;o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+d)}catch(e){}};
+const good=()=>{beep(660);setTimeout(()=>beep(880),120)},bad=()=>beep(200,.3);
+const mx=()=>[5,10,20][S.lv-1],SM=()=>[10,20,50][S.lv-1];
+function nums(a,n=3,sp=3){const s=new Set([a]);let g=0;while(s.size<n&&g++<60){const v=a+R(-sp,sp);if(v>=0)s.add(v)}return[...s]}
+function mk(h,ans,o){o=shuffle(o.slice());return{h,o,a:o.indexOf(ans)}}
+const GN={
+count(){const n=R(1,mx()),e=pick(EM);return mk(`<div class=big>${e.repeat(n)}</div><p>How many are there ?</p>`,n,nums(n))},
+compare(){let a,b;do{a=R(1,mx());b=R(1,mx())}while(a==b);const more=Math.random()<.5,e=pick(EM),f=pick(EM.filter(x=>x!=e));
+ return mk(`<div class=two><div class=big>${e.repeat(a)}</div><div class=big>${f.repeat(b)}</div></div><p>Which side has ${more?'more':'fewer'} ?</p>`,(more?a>b:a<b)?'Left':'Right',['Left','Right'])},
+add(){const s=SM(),a=R(1,s-1),b=R(1,s-a),t=a+b,v=t<=12?`<div class=big>${'🍎'.repeat(a)} ➕ ${'🍏'.repeat(b)}</div>`:'';return mk(`${v}<div class=eq>${a} + ${b} = ?</div>`,t,nums(t))},
+sub(){const s=SM(),a=R(2,s),b=R(1,a-1),t=a-b,v=a<=12?`<div class=big>${'🍪'.repeat(t)}<span class=x>${'🍪'.repeat(b)}</span></div>`:'';return mk(`${v}<div class=eq>${a} − ${b} = ?</div>`,t,nums(t))},
+symbol(){const s=SM(),p=Math.random()<.5;let a,b;if(p){a=R(1,s-1);b=R(1,s-a)}else{a=R(2,s);b=R(1,a-1)}return mk(`<div class=eq>${a} <span class=blank>?</span> ${b} = ${p?a+b:a-b}</div><p>Which sign fits ?</p>`,p?'+':'−',['+','−'])},
+mult(){const l=S.lv,a=R(2,[5,8,12][l-1]),b=R(2,l==1?5:[5,8,12][l-1]),t=a*b,v=l==1?`<div class=big>${('🌟'.repeat(b)+'<br>').repeat(a)}</div>`:'';return mk(`${v}<div class=eq>${a} × ${b} = ?</div>`,t,nums(t,3,Math.max(3,a)))},
+pattern(){const l=S.lv,st=pick([[1,2],[1,2,3],[1,2,3,5,10]][l-1]),d=l==3&&Math.random()<.4?-1:1,s0=d<0?R(st*5,st*5+10):R(0,10),q=[0,1,2,3,4].map(i=>s0+d*st*i),h=R(1,4);
+ return mk(`<div class=eq>${q.map((v,i)=>i==h?'<span class=blank>?</span>':v).join(', ')}</div><p>Which number is missing ?</p>`,q[h],nums(q[h],3,st+2))},
+frame(){const t=[10,10,20][S.lv-1],a=R(1,t-2),b=R(1,t-a-1),emp=S.lv==2;let c='';for(let i=0;i<t;i++)c+=`<i class="${i<a?'r':i<a+b?'u':''}"></i>`;
+ const ans=emp?t-a-b:a+b;return mk(`<div class=tf>${c}</div><p>${emp?'How many empty boxes ?':'How many red and purple boxes in all ?'}</p>`,ans,nums(ans))}
+};
+const noEmo=t=>t.replace(/\p{Extended_Pictographic}|\uFE0F/gu,' ');
+function say(t){if(!S.snd||!window.speechSynthesis)return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=.9;speechSynthesis.speak(u)}catch(e){}}
+const spoken=h=>noEmo(h.replace(/<[^>]*>/g,' ')).replace(/=\s*\?/g,'equals what').replace(/\+/g,' plus ').replace(/−/g,' minus ').replace(/×/g,' times ').replace(/=/g,' equals ').replace(/\s+/g,' ').trim();
+let Z={};
+function menu(){clearInterval(Z.tm);try{speechSynthesis.cancel()}catch(e){}const u=Math.min(12,Math.floor(S.stars/5));
+ $('#app').innerHTML=`<h1>🦁 Math Kids Plus</h1><div class=sub>⭐ ${S.stars} &nbsp; ❤️ ${hearts()} &nbsp; <button class=ic onclick=snd()>${S.snd?'🔊':'🔇'}</button></div>
+ <div class=seg>${['Easy','Medium','Hard'].map((n,i)=>`<button class="${S.lv==i+1?'on':''}" onclick="lv(${i+1})">${n}</button>`).join('')}</div>
+ <div class=grid>${MODES.map(m=>`<button class=mode onclick="start('${m[0]}')">${m[4]?'<em>NEW</em>':''}<span>${m[1]}</span><b>${m[2]}</b><small>${m[3]}</small></button>`).join('')}</div>
+ <button class=link onclick=report()>📊 Report &amp; Stickers</button>`}
+function lv(n){S.lv=n;save();menu()}
+function start(m){clearInterval(Z.tm);Z={m,sp:m=='speed',i:0,ok:0,n:0,t:60};
+ if(Z.sp)Z.tm=setInterval(()=>{Z.t--;const e=$('#tm'),p=$('#pb');if(e)e.textContent=Z.t;if(p)p.style.width=Z.t/60*100+'%';if(Z.t<=0)done()},1000);ask()}
+function ask(){if(Z.over)return;if(!Z.sp&&Z.i>=10)return done();Z.q=GN[Z.sp?pick(['count','add','sub','symbol','mult']):Z.m]();Z.lock=0;draw()}
+function draw(){const q=Z.q;$('#app').innerHTML=`<div class=top><button class=ic onclick=menu()>⬅</button><div class=bar><b id=pb style="width:${Z.sp?Z.t/60*100:Z.i*10}%"></b></div><span>${Z.sp?'⏱ <span id=tm>'+Z.t+'</span>':'⭐ '+Z.ok}</span></div>
+ <div class=card onclick="say(spoken(Z.q.h))">${q.h}<small>🔊 tap to hear</small></div><div class=opts>${q.o.map((o,i)=>`<button class=opt onclick=pickA(${i})>${o}</button>`).join('')}</div><div id=fb class=fb></div>`;say(spoken(q.h))}
+function pickA(i){if(Z.lock)return;Z.lock=1;const ok=i==Z.q.a,b=document.querySelectorAll('.opt');b[Z.q.a].classList.add('ok');Z.n++;
+ if(ok){Z.ok++;good();$('#fb').textContent=pick(['Great job! 🎉','Awesome! 🌟','Well done! 👏','Correct! ✅'])}else{b[i].classList.add('no');bad();$('#fb').textContent='No worries, next one! 💪'}
+ say(noEmo($('#fb').textContent));Z.i++;setTimeout(ask,ok?1100:1500)}
+function done(){if(Z.over)return;Z.over=1;clearInterval(Z.tm);const r=S.rep[Z.m]=S.rep[Z.m]||{p:0,c:0,t:0,b:0},k=Z.ok;
+ const st=Z.sp?Math.min(5,Math.floor(k/3)):(k>=9?3:k>=6?2:k>=3?1:0),before=Math.floor(S.stars/5);
+ r.p++;r.c+=k;r.t+=Z.sp?Z.n:10;r.b=Math.max(r.b,k);S.stars+=st;save();const nw=Math.floor(S.stars/5)>before&&before<12;
+ $('#app').innerHTML=`<div class=card><div class=st>${'⭐'.repeat(st)||'🙂'}</div><h2>${k} ${Z.sp?'correct in 60 sec':'/ 10'}</h2><p>${st>=3?'Amazing!':st>=1?'Nice work, keep practicing!':'Try again!'}</p><div class=big>❤️ +${k}</div></div>
+ <button class=link onclick="start('${Z.m}')">🔁 Play again</button><button class=link onclick=menu()>🏠 Menu</button>`}
+function report(){const u=Math.min(12,Math.floor(S.stars/5));
+ $('#app').innerHTML=`<div class=top><button class=ic onclick=menu()>⬅</button><h2>📊 Report Card</h2></div><div class=hb><span>❤️</span><div><b>${hearts()}</b></div></div>
+ <table><tr><th></th><th>Plays</th><th>Correct %</th><th>Best</th></tr>${MODES.map(m=>{const r=S.rep[m[0]]||{p:0,c:0,t:0,b:0};return`<tr><td>${m[1]}</td><td>${r.p}</td><td>${r.t?Math.round(r.c/r.t*100)+'%':'-'}</td><td>${r.b}</td></tr>`}).join('')}</table>`}
+function snd(){S.snd=!S.snd;save();menu()}
+setTimeout(()=>{const e=$('#sp');if(!e)return;e.style.opacity=0;setTimeout(()=>e.remove(),500)},1900);
+menu();
+</script></body></html>
